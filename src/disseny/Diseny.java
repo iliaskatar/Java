@@ -207,6 +207,7 @@ public class Diseny extends JFrame {
         JLabel res = new JLabel("Reserves Pendents");
         res.setBounds(60, 100, 200, 30);
         jp0.add(res);
+        
     }
     
 
