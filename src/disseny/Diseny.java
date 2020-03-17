@@ -8,14 +8,20 @@ package disseny;
 //import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.ScrollPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -41,6 +47,7 @@ public class Diseny extends JFrame {
         omplirPanells();
         omplirPannell2();
         omplirPannell0();
+        funcionar();
     }
 
     private void omplirPanells() {
@@ -118,97 +125,141 @@ public class Diseny extends JFrame {
             this.getContentPane().add(jpanell);
         }
     }
-    private void omplirPannell2(){
+
+    private void omplirPannell2() {
         JPanel jp2 = (JPanel) this.getContentPane().getComponent(2);
-        
+
         JLabel jlClient = new JLabel("Back", SwingConstants.CENTER);// titol etiqueta
         jlClient.setLayout(null);
         jlClient.setBounds(0, 0, jp2.getWidth(), 100);
         jlClient.setFont(new Font("Dyuthi", Font.PLAIN, 50));
         jp2.add(jlClient);
-        
-        
+
         JLabel nom = new JLabel("Nom Hotel:");
         nom.setBounds(60, 100, 100, 30);
         jp2.add(nom);
-        
+
         JTextField jtnom = new JTextField();
         jtnom.setBounds(200, 100, 150, 30);
         jp2.add(jtnom);
-        
+
         //crear boto guardar        
         JButton buto = new JButton("Guardar!");
         buto.setSize(150, 30);
         buto.setLocation((jp2.getWidth() / 2) - (buto.getWidth() / 2), 150);
         jp2.add(buto);
-        
+
         JLabel Registre = new JLabel("Registre nova habitacio");
         Registre.setBounds(60, 100, 200, 200);
         jp2.add(Registre);
-        
+
         JLabel num = new JLabel("nun.");
         num.setBounds(60, 100, 90, 250);
         jp2.add(num);
-        
+
         JTextField jtnum = new JTextField();
         jtnum.setBounds(100, 210, 40, 20);
         jp2.add(jtnum);
-        
+
         JLabel persones = new JLabel("per.");
         persones.setBounds(150, 100, 100, 250);
         jp2.add(persones);
-        
+
         JTextField jtper = new JTextField();
         jtper.setBounds(200, 210, 40, 20);
         jp2.add(jtper);
-        
+
         JButton buton = new JButton("Guardar!");
         buton.setSize(150, 30);
         buton.setLocation((jp2.getWidth() / 2) - (buton.getWidth() / 2), 260);
         jp2.add(buton);
-        
+
         JLabel reserva = new JLabel("consolta reserva");
         reserva.setBounds(60, 100, 200, 300);
         jp2.add(reserva);
-        
-         JLabel nomCli = new JLabel("Nom client:");
+
+        JLabel nomCli = new JLabel("Nom client:");
         nomCli.setBounds(60, 100, 90, 450);
         jp2.add(nomCli);
-        
+
         JTextField jtnomCli = new JTextField();
         jtnomCli.setBounds(150, 320, 100, 20);
         jp2.add(jtnomCli);
-        
+
         JTextField jtaa = new JTextField();
         jtaa.setBounds(60, 400, 150, 100);
         jp2.add(jtaa);
-        
+
         JTextField jtbb = new JTextField();
         jtbb.setBounds(150, 400, 200, 100);
         jp2.add(jtbb);
-        
+
         JButton botoElimi = new JButton("Eliminar");
         botoElimi.setSize(150, 30);
         botoElimi.setLocation((jp2.getWidth() / 2) - (botoElimi.getWidth() / 2), 700);
         jp2.add(botoElimi);
-        
-        
+
     }
-    
-    private void omplirPannell0(){
-         JPanel jp0 = (JPanel) this.getContentPane().getComponent(0);
+
+    private void omplirPannell0() {
+        JPanel jp0 = (JPanel) this.getContentPane().getComponent(0);
 
         JLabel jlClient = new JLabel("Gestio", SwingConstants.CENTER);// titol etiqueta
         jlClient.setLayout(null);
         jlClient.setBounds(0, 0, jp0.getWidth(), 100);
         jlClient.setFont(new Font("Dyuthi", Font.PLAIN, 50));
         jp0.add(jlClient);
-        
+
         JLabel res = new JLabel("Reserves Pendents");
         res.setBounds(60, 100, 200, 30);
         jp0.add(res);
+        DefaultTableModel taula1 = new DefaultTableModel();
+        taula1.addColumn("Reserva");
+        taula1.addColumn("Dia");
+        taula1.addColumn("Persona");
+        taula1.addColumn("Habitacio");
+        JTable taula = new JTable(taula1);
+        taula.setBounds(40, 150, 325, 200);
+        jp0.add(taula);
+        JScrollPane taulascroll = new JScrollPane(taula, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        taulascroll.setBounds(40, 150, 325, 200);
+        jp0.add(taulascroll);
+
+        JLabel resCon = new JLabel("Reserves Confirmades");
+        resCon.setBounds(60, 350, 150, 40);
+        jp0.add(resCon);
+
+        JTextField jtresCon = new JTextField();
+        jtresCon.setBounds(200, 360, 100, 20);
+        jp0.add(jtresCon);
         
+        JButton buto = new JButton("/*");
+        buto.setSize(30, 30);
+        buto.setLocation((jp0.getWidth() -50) - (buto.getWidth() / 2), 350);
+        jp0.add(buto);
+
+        DefaultTableModel taula2 = new DefaultTableModel();
+        taula2.addColumn("Nom");
+        taula2.addColumn("Date in");
+        taula2.addColumn("Date out");
+        taula2.addColumn("Habitacio");
+        JTable taulados = new JTable(taula2);
+        taulados.setBounds(40, 400, 325, 200);
+        jp0.add(taulados);
+        JScrollPane taulascrollsegona = new JScrollPane(taulados, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        taulascrollsegona.setBounds(40, 400, 325, 200);
+        jp0.add(taulascrollsegona);
+
     }
-    
+
+    private void funcionar() {
+        System.out.println(this.getContentPane().getWidth());
+        System.out.println(this.getContentPane().getHeight());
+        for (Component panell1 : this.getContentPane().getComponents()) {
+            System.out.println(panell1.getWidth() + " - " + panell1.getHeight());
+        }
+        this.setSize(this.getContentPane().getWidth() + 1, this.getContentPane().getHeight() + 1);
+        this.setSize(this.getContentPane().getWidth() - 1, this.getContentPane().getHeight() - 1);
+    }
 
 }
