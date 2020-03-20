@@ -7,11 +7,17 @@ package disseny;
 
 //import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.ScrollPane;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.net.http.WebSocket;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,6 +35,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Diseny extends JFrame {
 
+    private final ImageIcon ok = new ImageIcon("imatges/tick.png"), nok = new ImageIcon("imatges/creu.png");
+    private JLabel jlClient = new JLabel("Client", SwingConstants.CENTER);// titol etiqueta
+    private JLabel jlDni = new JLabel("Dni:");
+    private JTextField jtfDni = new JTextField();
+    private JLabel tickDni = new JLabel();
+    private JLabel jlNom = new JLabel("Nom:");
+    private JTextField jtfNom = new JTextField();
+    private JLabel tickNom = new JLabel();        
+    private JLabel jlCognom = new JLabel("Cognoms:");
+    private JTextField jtfCognoms = new JTextField();
+    private JLabel tickcognom = new JLabel();
+    private JLabel jlNumPerson = new JLabel("Numero Personas:");
+    private JTextField jtfNumPerson = new JTextField();
+    private JLabel tickNumPersones = new JLabel();
+    private JLabel jlNumNits = new JLabel("Num. Nits:");
+    private JTextField jtfNumNits = new JTextField();
+     private JLabel tickNumNits = new JLabel();
+    
+    
     public Diseny() {
         setVisible(true); // Finestra Visibla
         setSize(1200, 800); // Mida finestra
@@ -47,57 +72,79 @@ public class Diseny extends JFrame {
         omplirPanells();
         omplirPannell2();
         omplirPannell0();
+        imatges();
         funcionar();
     }
 
     private void omplirPanells() {
         JPanel jp = (JPanel) this.getContentPane().getComponent(1);
 
-        JLabel jlClient = new JLabel("Client", SwingConstants.CENTER);// titol etiqueta
+        
         jlClient.setLayout(null);
         jlClient.setBounds(0, 0, jp.getWidth(), 100);
         jlClient.setFont(new Font("Dyuthi", Font.PLAIN, 50));
         jp.add(jlClient);
+
         // etiqueta Dni
-        JLabel jlDni = new JLabel("Dni:");
+        
         jlDni.setBounds(40, 100, 30, 30);
         jp.add(jlDni);
-        // text Dni
-        JTextField jtfDni = new JTextField();
+         // text Dni
+        
         jtfDni.setBounds(200, 100, 150, 30);
         jp.add(jtfDni);
+        //afagit tick 
+        
+        tickDni.setBounds(360, 100, 30, 30);
+        jp.add(tickDni);
+
         // etiqueta Nom
-        JLabel jlNom = new JLabel("Nom:");
+
         jlNom.setBounds(40, 150, 40, 30);
         jp.add(jlNom);
         // text Nom
-        JTextField jtfNom = new JTextField();
+        
         jtfNom.setBounds(200, 150, 150, 30);
         jp.add(jtfNom);
+        //afagit tick 
+
+        tickNom.setBounds(360, 150, 30, 30);
+        jp.add(tickNom);
+        
         // etiqueta Cognom
-        JLabel jlCognom = new JLabel("Cognoms:");
+
         jlCognom.setBounds(40, 200, 100, 30);
         jp.add(jlCognom);
         // text Cognom
-        JTextField jtfCognoms = new JTextField();
+        
         jtfCognoms.setBounds(200, 200, 150, 30);
         jp.add(jtfCognoms);
+        //afagit tick 
+        
+        tickcognom.setBounds(360, 200, 30, 30);
+        jp.add(tickcognom);
         // etiqueta Numero Persona
-        JLabel jlNumPerson = new JLabel("Numero Personas:");
+        
         jlNumPerson.setBounds(40, 250, 150, 30);
         jp.add(jlNumPerson);
         // text Numero Persona
-        JTextField jtfNumPerson = new JTextField();
+
         jtfNumPerson.setBounds(200, 250, 30, 30);
         jp.add(jtfNumPerson);
+        //afagit tick 
+        
+        tickNumPersones.setBounds(360, 250, 30, 30);
+        jp.add(tickNumPersones);
         // etiqueta Numero Nits
-        JLabel jlNumNits = new JLabel("Num. Nits:");
+        
         jlNumNits.setBounds(40, 300, 150, 30);
         jp.add(jlNumNits);
         // text Numero nits
-        JTextField jtfNumNits = new JTextField();
         jtfNumNits.setBounds(200, 300, 30, 30);
         jp.add(jtfNumNits);
+        //afagit tick 
+        tickNumNits.setBounds(360, 300, 30, 30);
+        jp.add(tickNumNits);
         // etiqueta Data
         JLabel jlDataEntrada = new JLabel("Data de entrada:");
         jlDataEntrada.setBounds(40, 350, 150, 30); //(Pocicio, Pocico, Mida Llargada, Mida Alutura)
@@ -229,14 +276,9 @@ public class Diseny extends JFrame {
         resCon.setBounds(60, 350, 150, 40);
         jp0.add(resCon);
 
-        JTextField jtresCon = new JTextField();
-        jtresCon.setBounds(200, 360, 100, 20);
-        jp0.add(jtresCon);
-        
-        JButton buto = new JButton("/*");
-        buto.setSize(30, 30);
-        buto.setLocation((jp0.getWidth() -50) - (buto.getWidth() / 2), 350);
-        jp0.add(buto);
+        JDateChooser select = new JDateChooser();
+        select.setBounds(225, 350, 150, 30);
+        jp0.add(select);
 
         DefaultTableModel taula2 = new DefaultTableModel();
         taula2.addColumn("Nom");
@@ -250,6 +292,78 @@ public class Diseny extends JFrame {
         taulascrollsegona.setBounds(40, 400, 325, 200);
         jp0.add(taulascrollsegona);
 
+    }
+    private void imatges(){
+        
+            KeyListener clau = new KeyListener() {
+            ImageIcon okred = new ImageIcon(ok.getImage().getScaledInstance(tickDni.getWidth(), tickDni.getHeight(), Image.SCALE_SMOOTH));
+            ImageIcon nokred = new ImageIcon(nok.getImage().getScaledInstance(tickDni.getWidth(), tickDni.getHeight(), Image.SCALE_SMOOTH));
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+
+            }
+                     
+    
+    
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                if (ke.getComponent().equals(jtfDni)) {
+                    tickDni.setVisible(true);
+                    if (jtfDni.getText().matches("^\\d{8}(?![POUpou])[A-Za-z]$")) {
+                        tickDni.setIcon(okred);
+                    } else {
+                        tickDni.setIcon(nokred);
+                    }
+                } else if (ke.getComponent().equals(jtfNom)) {
+                    tickNom.setVisible(true);
+                    if (!jtfNom.getText().matches(".*\\d+.*")) {
+                        tickNom.setIcon(okred);
+                    } else {
+                        tickNom.setIcon(nokred);
+                    }
+                } else if (ke.getComponent().equals(jtfCognoms)) {
+                    tickcognom.setVisible(true);
+                    if (!jtfCognoms.getText().matches(".*\\d+.*")) {
+                        tickcognom.setIcon(okred);
+                    } else {
+                        tickcognom.setIcon(nokred);
+                    }
+                } else if (ke.getComponent().equals(jtfNumPerson)) {
+                    tickNumPersones.setVisible(true);
+                    if (jtfNumPerson.getText().matches("\\d+")) {
+                        tickNumPersones.setIcon(okred);
+                    } else {
+                        tickNumPersones.setIcon(nokred);
+                    }
+                } else if (ke.getComponent().equals(jtfNumNits)) {
+                    tickNumNits.setVisible(true);
+                    if (jtfNumNits.getText().matches("\\d+")) {
+                        tickNumNits.setIcon(okred);
+                    } else {
+                        tickNumNits.setIcon(nokred);
+                    }
+                }
+
+                if (tickDni.getIcon().equals(okred) && tickNom.getIcon().equals(okred) && tickcognom.getIcon().equals(okred) && tickNumPersones.getIcon().equals(okred) && tickNumNits.getIcon().equals(okred)) {
+                    jlClient.setEnabled(true);                    
+                } else {
+                    jlClient.setEnabled(false);
+                }
+            }
+        };
+        jtfDni.addKeyListener(clau);
+        jtfNom.addKeyListener(clau);
+        jtfCognoms.addKeyListener(clau);
+        jtfNumPerson.addKeyListener(clau);
+        jtfNumNits.addKeyListener(clau);
+    
     }
 
     private void funcionar() {
