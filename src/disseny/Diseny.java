@@ -14,6 +14,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.http.WebSocket;
@@ -37,12 +39,12 @@ public class Diseny extends JFrame {
 
     private final ImageIcon ok = new ImageIcon("imatges/tick.png"), nok = new ImageIcon("imatges/creu.png");
     private JLabel jlClient = new JLabel("Client", SwingConstants.CENTER);// titol etiqueta
-    private JLabel jlDni = new JLabel("Dni:");
-    private JTextField jtfDni = new JTextField();
-    private JLabel tickDni = new JLabel();
+    private JLabel jlDni = new JLabel("Dni:");// text dni
+    private JTextField jtfDni = new JTextField();// escriure el dni
+    private JLabel tickDni = new JLabel();// tick o creu dni
     private JLabel jlNom = new JLabel("Nom:");
     private JTextField jtfNom = new JTextField();
-    private JLabel tickNom = new JLabel();        
+    private JLabel tickNom = new JLabel();
     private JLabel jlCognom = new JLabel("Cognoms:");
     private JTextField jtfCognoms = new JTextField();
     private JLabel tickcognom = new JLabel();
@@ -51,9 +53,14 @@ public class Diseny extends JFrame {
     private JLabel tickNumPersones = new JLabel();
     private JLabel jlNumNits = new JLabel("Num. Nits:");
     private JTextField jtfNumNits = new JTextField();
-     private JLabel tickNumNits = new JLabel();
-    
-    
+    private JLabel tickNumNits = new JLabel();
+    private JCalendar jcClients = new JCalendar();// Crear calendari
+    private JLabel nom = new JLabel("Nom Hotel:");
+    private JButton jbClient = new JButton("Reserva");
+    private JButton buto = new JButton("Guardar!");
+    private JTextField jtnom = new JTextField();
+    private DefaultTableModel taula1 = new DefaultTableModel();
+
     public Diseny() {
         setVisible(true); // Finestra Visibla
         setSize(1200, 800); // Mida finestra
@@ -79,52 +86,48 @@ public class Diseny extends JFrame {
     private void omplirPanells() {
         JPanel jp = (JPanel) this.getContentPane().getComponent(1);
 
-        
         jlClient.setLayout(null);
         jlClient.setBounds(0, 0, jp.getWidth(), 100);
         jlClient.setFont(new Font("Dyuthi", Font.PLAIN, 50));
         jp.add(jlClient);
 
         // etiqueta Dni
-        
         jlDni.setBounds(40, 100, 30, 30);
         jp.add(jlDni);
-         // text Dni
-        
+        // text Dni
+
         jtfDni.setBounds(200, 100, 150, 30);
         jp.add(jtfDni);
         //afagit tick 
-        
+
         tickDni.setBounds(360, 100, 30, 30);
         jp.add(tickDni);
 
         // etiqueta Nom
-
         jlNom.setBounds(40, 150, 40, 30);
         jp.add(jlNom);
         // text Nom
-        
+
         jtfNom.setBounds(200, 150, 150, 30);
         jp.add(jtfNom);
         //afagit tick 
 
         tickNom.setBounds(360, 150, 30, 30);
         jp.add(tickNom);
-        
-        // etiqueta Cognom
 
+        // etiqueta Cognom
         jlCognom.setBounds(40, 200, 100, 30);
         jp.add(jlCognom);
         // text Cognom
-        
+
         jtfCognoms.setBounds(200, 200, 150, 30);
         jp.add(jtfCognoms);
         //afagit tick 
-        
+
         tickcognom.setBounds(360, 200, 30, 30);
         jp.add(tickcognom);
         // etiqueta Numero Persona
-        
+
         jlNumPerson.setBounds(40, 250, 150, 30);
         jp.add(jlNumPerson);
         // text Numero Persona
@@ -132,11 +135,11 @@ public class Diseny extends JFrame {
         jtfNumPerson.setBounds(200, 250, 30, 30);
         jp.add(jtfNumPerson);
         //afagit tick 
-        
+
         tickNumPersones.setBounds(360, 250, 30, 30);
         jp.add(tickNumPersones);
         // etiqueta Numero Nits
-        
+
         jlNumNits.setBounds(40, 300, 150, 30);
         jp.add(jlNumNits);
         // text Numero nits
@@ -150,12 +153,11 @@ public class Diseny extends JFrame {
         jlDataEntrada.setBounds(40, 350, 150, 30); //(Pocicio, Pocico, Mida Llargada, Mida Alutura)
         jp.add(jlDataEntrada);
 
-        JCalendar jcClients = new JCalendar();// Crear calendari
         jcClients.setSize(250, 250);// Mida Calendari
         jcClients.setLocation((jp.getWidth() / 2) - (jcClients.getWidth() / 2), 400); // Pocicio del calandari(() Pocicio on estara el calandari)
         jp.add(jcClients);
 
-        JButton jbClient = new JButton("Reserva");
+        jbClient.setEnabled(false);
         jbClient.setSize(150, 30);
         jbClient.setLocation((jp.getWidth() / 2) - (jbClient.getWidth() / 2), 700);
         jp.add(jbClient);
@@ -182,16 +184,13 @@ public class Diseny extends JFrame {
         jlClient.setFont(new Font("Dyuthi", Font.PLAIN, 50));
         jp2.add(jlClient);
 
-        JLabel nom = new JLabel("Nom Hotel:");
         nom.setBounds(60, 100, 100, 30);
         jp2.add(nom);
 
-        JTextField jtnom = new JTextField();
         jtnom.setBounds(200, 100, 150, 30);
         jp2.add(jtnom);
 
         //crear boto guardar        
-        JButton buto = new JButton("Guardar!");
         buto.setSize(150, 30);
         buto.setLocation((jp2.getWidth() / 2) - (buto.getWidth() / 2), 150);
         jp2.add(buto);
@@ -260,7 +259,7 @@ public class Diseny extends JFrame {
         JLabel res = new JLabel("Reserves Pendents");
         res.setBounds(60, 100, 200, 30);
         jp0.add(res);
-        DefaultTableModel taula1 = new DefaultTableModel();
+
         taula1.addColumn("Reserva");
         taula1.addColumn("Dia");
         taula1.addColumn("Persona");
@@ -293,9 +292,10 @@ public class Diseny extends JFrame {
         jp0.add(taulascrollsegona);
 
     }
-    private void imatges(){
-        
-            KeyListener clau = new KeyListener() {
+
+    private void imatges() {
+
+        KeyListener clau = new KeyListener() {
             ImageIcon okred = new ImageIcon(ok.getImage().getScaledInstance(tickDni.getWidth(), tickDni.getHeight(), Image.SCALE_SMOOTH));
             ImageIcon nokred = new ImageIcon(nok.getImage().getScaledInstance(tickDni.getWidth(), tickDni.getHeight(), Image.SCALE_SMOOTH));
 
@@ -308,9 +308,6 @@ public class Diseny extends JFrame {
             public void keyPressed(KeyEvent ke) {
 
             }
-                     
-    
-    
 
             @Override
             public void keyReleased(KeyEvent ke) {
@@ -352,9 +349,9 @@ public class Diseny extends JFrame {
                 }
 
                 if (tickDni.getIcon().equals(okred) && tickNom.getIcon().equals(okred) && tickcognom.getIcon().equals(okred) && tickNumPersones.getIcon().equals(okred) && tickNumNits.getIcon().equals(okred)) {
-                    jlClient.setEnabled(true);                    
+                    jbClient.setEnabled(true);
                 } else {
-                    jlClient.setEnabled(false);
+                    jbClient.setEnabled(false);
                 }
             }
         };
@@ -363,7 +360,34 @@ public class Diseny extends JFrame {
         jtfCognoms.addKeyListener(clau);
         jtfNumPerson.addKeyListener(clau);
         jtfNumNits.addKeyListener(clau);
-    
+
+        ActionListener nomHotel = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                setTitle(jtnom.getText());
+                jtnom.setText(null);
+            }
+        };
+        buto.addActionListener(nomHotel);
+        ActionListener guarda = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                Object[] llista = {jtfDni.getText(), jcClients.getDayChooser().getDay(), jtfNumNits};
+                taula1.addRow(llista);
+                tickDni.setVisible(false);
+                tickNom.setVisible(false);
+                tickcognom.setVisible(false);
+                tickNumPersones.setVisible(false);
+                tickNumNits.setVisible(false);
+                jtfDni.setText(null);
+                jtfNom.setText(null);
+                jtfCognoms.setText(null);
+                jtfNumPerson.setText(null);
+                jtfNumNits.setText(null);
+
+            }
+        };
+        jbClient.addActionListener(guarda);
     }
 
     private void funcionar() {
