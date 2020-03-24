@@ -12,7 +12,7 @@ public class Hotel {
 
     public static void main(String[] args) {
         Diseny d = new Diseny();
-                
+        
     }
     
 }

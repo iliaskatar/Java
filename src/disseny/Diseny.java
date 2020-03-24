@@ -60,6 +60,7 @@ public class Diseny extends JFrame {
     private JButton buto = new JButton("Guardar!");
     private JTextField jtnom = new JTextField();
     private DefaultTableModel taula1 = new DefaultTableModel();
+    
 
     public Diseny() {
         setVisible(true); // Finestra Visibla
@@ -81,6 +82,7 @@ public class Diseny extends JFrame {
         omplirPannell0();
         imatges();
         funcionar();
+        
     }
 
     private void omplirPanells() {
