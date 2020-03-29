@@ -56,11 +56,18 @@ public class Diseny extends JFrame {
     private JLabel tickNumNits = new JLabel();
     private JCalendar jcClients = new JCalendar();// Crear calendari
     private JLabel nom = new JLabel("Nom Hotel:");
-    private JButton jbClient = new JButton("Reserva");
-    private JButton buto = new JButton("Guardar!");
+    private JButton jbClient = new JButton("Reserva");// boto j1
+    private JButton buto = new JButton("Guardar!");// 1 boto j2
     private JTextField jtnom = new JTextField();
     private DefaultTableModel taula1 = new DefaultTableModel();
-    
+    private JLabel num = new JLabel("nun.");
+    private JTextField jtnum = new JTextField();
+    private JLabel persones = new JLabel("per.");
+    private JTextField jtper = new JTextField();
+    private JButton buton = new JButton("Guardar!");// 2 boto j2
+    private JLabel nomCli = new JLabel("Nom client:");
+    private JTextField jtnomCli = new JTextField();
+    private JButton resCon = new JButton();
 
     public Diseny() {
         setVisible(true); // Finestra Visibla
@@ -72,7 +79,7 @@ public class Diseny extends JFrame {
         setMinimumSize(new Dimension(1200, 800)); // No es pot fer mes petita de
         this.getContentPane().setBackground(Color.BLACK); // fons negre
 
-        iniciarComponents();
+        iniciarComponents();   
     }
 
     private void iniciarComponents() {
@@ -82,7 +89,7 @@ public class Diseny extends JFrame {
         omplirPannell0();
         imatges();
         funcionar();
-        
+
     }
 
     private void omplirPanells() {
@@ -201,23 +208,18 @@ public class Diseny extends JFrame {
         Registre.setBounds(60, 100, 200, 200);
         jp2.add(Registre);
 
-        JLabel num = new JLabel("nun.");
         num.setBounds(60, 100, 90, 250);
         jp2.add(num);
 
-        JTextField jtnum = new JTextField();
         jtnum.setBounds(100, 210, 40, 20);
         jp2.add(jtnum);
 
-        JLabel persones = new JLabel("per.");
         persones.setBounds(150, 100, 100, 250);
         jp2.add(persones);
 
-        JTextField jtper = new JTextField();
         jtper.setBounds(200, 210, 40, 20);
         jp2.add(jtper);
 
-        JButton buton = new JButton("Guardar!");
         buton.setSize(150, 30);
         buton.setLocation((jp2.getWidth() / 2) - (buton.getWidth() / 2), 260);
         jp2.add(buton);
@@ -226,11 +228,9 @@ public class Diseny extends JFrame {
         reserva.setBounds(60, 100, 200, 300);
         jp2.add(reserva);
 
-        JLabel nomCli = new JLabel("Nom client:");
         nomCli.setBounds(60, 100, 90, 450);
         jp2.add(nomCli);
 
-        JTextField jtnomCli = new JTextField();
         jtnomCli.setBounds(150, 320, 100, 20);
         jp2.add(jtnomCli);
 
@@ -273,7 +273,7 @@ public class Diseny extends JFrame {
         taulascroll.setBounds(40, 150, 325, 200);
         jp0.add(taulascroll);
 
-        JLabel resCon = new JLabel("Reserves Confirmades");
+        ///////////////////////////////////////////////////////////////////////
         resCon.setBounds(60, 350, 150, 40);
         jp0.add(resCon);
 
@@ -390,8 +390,20 @@ public class Diseny extends JFrame {
             }
         };
         jbClient.addActionListener(guarda);
-    }
 
+        ActionListener renova = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if (resCon.isSelected()) {
+                    resCon.setText("Entrada");
+                } else {
+                    resCon.setText("Sortida");
+                }
+            }
+        };
+        resCon.addActionListener(renova);
+
+    }
     private void funcionar() {
         System.out.println(this.getContentPane().getWidth());
         System.out.println(this.getContentPane().getHeight());
